@@ -21,7 +21,7 @@ export default function Home() {
   'ArianeVCarvalho',
   'maykbrito',
   'filipedeschamps',
-  'Matheus153' ]
+  'diego3g' ]
 
   return (
     <>
@@ -38,7 +38,7 @@ export default function Home() {
             </h1>
             
             <OrkutNostalgicIconSet/>
-            
+
           </Box>
           
         </div>
