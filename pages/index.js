@@ -4,6 +4,8 @@ import Box from "../src/components/Box"
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from "../src/Lib/kutCommons"
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations"
 
+import Background from '../src/components/Background'
+
 function ProfileSidebar(props) {
   //console.log(props)
   return (
@@ -42,7 +44,7 @@ export default function Home() {
   'diego3g' ]
 
   return (
-    <>
+    <Background>
       <AlurakutMenu/>
       <MainGrid>
         <div className="profileArea" style={{ gridArea: 'profileArea'}}>
@@ -139,6 +141,7 @@ export default function Home() {
           
         </div>
       </MainGrid>
-    </>
+    </Background>
+      
   )
 }
