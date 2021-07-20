@@ -70,16 +70,47 @@ export default function Home() {
   const [seguidores, setSeguidores] = React.useState([])
   // 0 - Pegar os arrays de dados do github
     React.useEffect(() => {
-      fetch(`https://api.github.com/users/Matheus153/following`)
-        .then((responseService) => {
-          return responseService.json()
-        }) 
-        .then((responseComplete) => {
-          setSeguidores(responseComplete)
-        })
-    }, [])
+    // GET
+    fetch('https://api.github.com/users/Matheus153/following')
+    .then((respostaService) => {
+      return respostaService.json();
+    })
+    .then((respostaCompleta) => {
+      setSeguidores(respostaCompleta);
+    })
+
+    // API GraphQL
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '7fefaa5165cf21443eaf776297324c',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ "query": `query {
+        allComunities{
+          id
+          imageUrl
+          title
+          creatorSlug
+        }
+      }` })
+    })
+    .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+    .then((respostaCompleta) => {
+      const comunidadesDato = respostaCompleta.data.allComunities
+      console.log(comunidadesDato)
+      setComunidades(comunidadesDato)
+    })
+    // .then(function (response) {
+    //   return response.json()
+    // })
+
+  }, [])
   // 1 - criar um box que vai ter um map, baseado nos itens do arrays 
   // que pegamos 
+
+
 
   return (
     <Background>
@@ -146,8 +177,8 @@ export default function Home() {
                 {comunidades.map((item) => {
                 return (
                   <li key={item.id}>
-                    <a href={`/users/${item.title}`} >
-                      <img src={item.image} alt="" />
+                    <a href={`/communities/${item.id}`} >
+                      <img src={item.imageUrl} alt="" />
                       <span>{item.title}</span>
                     </a>
                   </li>     
