@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MainGrid from "../src/components/MainGrind"
 import Box from "../src/components/Box"
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from "../src/Lib/kutCommons"
@@ -24,6 +24,30 @@ function ProfileSidebar(props) {
   )
 }
 
+function ProfileRelationsBox(props) {
+  return(
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {props.title} ({props.items.length}) 
+      </h2>
+
+      <ul>
+        {/*   {seguidores.map((item) => {
+          return (
+            <li key={item}>
+              <a href={`https://github.com/${item}.png`} >
+                <img src={item.image} alt="" />
+                <span>{item.title}</span>
+              </a>
+            </li>     
+          )
+        })} */}
+
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 
 export default function Home() {
   const userAlurakut = 'Matheus153'
@@ -42,6 +66,20 @@ export default function Home() {
   'maykbrito',
   'filipedeschamps',
   'diego3g' ]
+
+  const [seguidores, setSeguidores] = React.useState([])
+  // 0 - Pegar os arrays de dados do github
+    React.useEffect(() => {
+      fetch(`https://api.github.com/users/Matheus153/following`)
+        .then((responseService) => {
+          return responseService.json()
+        }) 
+        .then((responseComplete) => {
+          setSeguidores(responseComplete)
+        })
+    }, [])
+  // 1 - criar um box que vai ter um map, baseado nos itens do arrays 
+  // que pegamos 
 
   return (
     <Background>
@@ -98,7 +136,7 @@ export default function Home() {
         </div>
 
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea'}}>
-
+          <ProfileRelationsBox title="Seguidores" items={seguidores}  />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Comunidades ({comunidades.length}) 
